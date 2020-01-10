@@ -148,29 +148,3 @@ exports.browserInit = function browserInit (appId, version, s) {
   console.warn("browserInit is deprecated and may be removed in the future");
   console.trace();
 }
-
-if (window.location.protocol === "file:") {
-  console.warn("Facebook JS SDK is not supported when using file:// protocol");
-} else {
-  window.fbAsyncInit = function() {
-    FB.init({
-      appId      : APP_ID,  // APP_ID is populated by the cordova after_prepare hook
-      xfbml      : true,
-      version    : 'v2.7'
-    });
-
-    __fbSdkReady = true;
-
-    for (var i = 0; i < __fbCallbacks.length; i++) {
-      __fbCallbacks[i]();
-    }
-  };
-
-  (function(d, s, id){
-      var js, fjs = d.getElementsByTagName(s)[0];
-      if (d.getElementById(id)) {return;}
-      js = d.createElement(s); js.id = id;
-      js.src = "//connect.facebook.net/en_US/sdk.js";
-      fjs.parentNode.insertBefore(js, fjs);
-  }(document, 'script', 'facebook-jssdk'));
-}
